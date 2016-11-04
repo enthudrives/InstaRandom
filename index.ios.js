@@ -4,7 +4,7 @@
  * @flow
  */
 
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import {
   AppRegistry,
   StyleSheet,
@@ -12,20 +12,32 @@ import {
   View
 } from 'react-native';
 
+class YesOrNo extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {answer: "Waities.."};
+  }
+
+  render() {
+    window.fetch('https://yesno.wtf/api/').then((response) => {
+      response.json().then((yesno) => {
+        this.setState({answer: yesno.answer});
+      });
+    });
+    return (
+      <Text style={{color: "red"}}>{this.state.answer}</Text>
+    );
+  }
+}
+
 export default class InstaRandom extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <Text style={styles.welcome}>
-          Welcome to React Native!
+        <Text>
+          Is that right?
         </Text>
-        <Text style={styles.instructions}>
-          To get started, edit index.ios.js
-        </Text>
-        <Text style={styles.instructions}>
-          Press Cmd+R to reload,{'\n'}
-          Cmd+D or shake for dev menu
-        </Text>
+        <YesOrNo />
       </View>
     );
   }
